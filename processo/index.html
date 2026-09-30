@@ -52,6 +52,20 @@ h1 em{font-style:italic}
 #fim .texto{color:var(--tinta)}
 .link{display:inline-block;margin-top:26px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta);text-decoration:none;border-bottom:1px solid var(--tinta);padding-bottom:4px}
 
+
+.video{position:relative;display:block;width:100%;margin:0;padding:0;border:0;background:none;cursor:pointer;border-radius:10px;overflow:hidden}
+.video img{display:block;width:100%;height:auto}
+.video .play{position:absolute;left:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 6px 24px rgba(0,0,0,.25);transition:transform .2s}
+.video .play:after{content:"";position:absolute;left:23px;top:18px;border-style:solid;border-width:11px 0 11px 18px;border-color:transparent transparent transparent var(--tinta)}
+.video:hover .play{transform:scale(1.06)}
+.legenda{margin:16px 0 0;font-family:'Playfair Display',serif;font-size:clamp(20px,4.6vw,26px);line-height:1.3}
+.legenda em{font-style:italic}
+.cta{margin:24px 0 0}
+.modal{position:fixed;inset:0;background:rgba(17,17,16,.55);display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;z-index:10}
+.modal[hidden]{display:none}
+.caixa{position:relative;background:var(--papel);width:100%;max-width:480px;padding:34px 26px 30px;border-radius:12px}
+.fechar{position:absolute;top:14px;right:16px;border:0;background:none;font-family:inherit;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--suave);cursor:pointer}
+.caixa .campo{margin-top:22px}
 :focus-visible{outline:2px solid var(--tinta);outline-offset:4px}
 @media (min-width:640px){
   .marca{top:26px;left:34px;height:22px}
@@ -67,13 +81,18 @@ h1 em{font-style:italic}
 <main>
   <div class="bloco">
     <p class="kicker">Aula gratuita</p>
-    <h1>A aula: como dou orçamentos de eventos <em>sem perder o cliente</em></h1>
+    <button type="button" class="video" id="abrir-video" aria-label="Ver a aula">
+      <img src="../assets/aula-orcamentos.jpg" alt="A aula: como dou orçamentos de eventos sem perder o cliente">
+      <span class="play" aria-hidden="true"></span>
+    </button>
+    <p class="legenda">Como dou orçamentos de eventos <em>sem perder o cliente</em></p>
+    <div class="cta"><button type="button" class="btn" id="abrir-btn">Ver a aula</button></div>
 
+  <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-label="Ver a aula">
+   <div class="caixa">
+    <button type="button" class="fechar" id="fechar">Fechar</button>
     <form id="form" novalidate>
-      <figure class="aula-capa" style="margin:0 0 28px;">
-        <img src="../assets/aula-orcamentos.jpg" alt="A aula: como dou orçamentos de eventos sem perder o cliente" style="display:block;width:100%;height:auto;border-radius:10px;">
-      </figure>
-      <p class="texto">Deixa aqui os teus dados e a aula abre logo a seguir.</p>
+      <p class="texto" style="margin-top:0">Deixa aqui os teus dados e a aula abre logo a seguir.</p>
 
       <div class="campo">
         <label for="f-nome">Nome</label>
@@ -106,8 +125,20 @@ h1 em{font-style:italic}
       <p class="texto" id="fim-texto"></p>
       <a class="link" id="fim-link" href="#" hidden>Abrir a aula no YouTube</a>
     </div>
+   </div>
+  </div>
   </div>
 </main>
+<script>
+(function(){
+  var m=document.getElementById("modal");
+  function abre(){ m.hidden=false; setTimeout(function(){ var n=document.getElementById("f-nome"); if(n) n.focus(); },50); }
+  document.getElementById("abrir-video").onclick=abre;
+  document.getElementById("abrir-btn").onclick=abre;
+  document.getElementById("fechar").onclick=function(){ m.hidden=true; };
+  m.addEventListener("click",function(e){ if(e.target===m) m.hidden=true; });
+})();
+</script>
 
 <script>
 (function(){

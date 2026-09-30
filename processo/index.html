@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Como dou orçamentos de eventos sem perder o cliente · Aula</title>
+<meta name="description" content="A aula da Adriana CheiraFesta: como dou orçamentos de eventos sem perder o cliente.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Red+Hat+Display:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--tinta:#111110;--suave:#6F6B63;--fraca:#B8B4AC;--linha:#E2DED6;--papel:#FFFFFF}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:'Red Hat Display',system-ui,-apple-system,sans-serif;font-weight:400;-webkit-font-smoothing:antialiased}
+h1,p,span,label{overflow-wrap:break-word}
+::selection{background:var(--tinta);color:var(--papel)}
+
+.marca{position:absolute;top:20px;left:20px;height:20px}
+.marca img{height:100%;width:auto;display:block}
+
+main{display:flex;flex-direction:column;justify-content:center;min-height:100vh;min-height:100svh;padding:84px 20px 64px}
+.bloco{width:100%;max-width:600px}
+
+.kicker{margin:0 0 22px;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--suave);white-space:nowrap}
+h1{margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(29px,6.8vw,46px);line-height:1.16;letter-spacing:-.01em;text-wrap:pretty}
+h1 em{font-style:italic}
+.texto{margin:22px 0 0;max-width:540px;font-size:17px;line-height:1.75;color:var(--suave);text-wrap:pretty}
+
+.campo{margin:30px 0 0}
+.campo label{display:block;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--suave)}
+.campo input{width:100%;padding:10px 0;border:0;border-bottom:1px solid var(--tinta);border-radius:0;background:transparent;color:var(--tinta);font-family:inherit;font-size:20px;line-height:1.5;outline:none;-webkit-appearance:none}
+.campo input::placeholder{color:var(--fraca)}
+.campo input:focus{box-shadow:inset 0 -1px 0 var(--tinta)}
+.tel{display:flex;gap:14px}
+.tel input.ind{flex:none;width:78px}
+.erro{margin:10px 0 0;font-size:14px;color:#C4554D;font-weight:700}
+.erro[hidden]{display:none}
+
+.autoriza{display:flex;gap:12px;align-items:flex-start;margin:30px 0 0;max-width:540px;font-size:15px;line-height:1.6;color:var(--tinta);cursor:pointer}
+.autoriza input{flex:none;width:18px;height:18px;margin:3px 0 0;accent-color:var(--tinta);cursor:pointer}
+.autoriza a{color:inherit;text-decoration:underline}
+
+.acoes{margin:32px 0 0}
+.btn{padding:17px 34px;border:0;background:var(--tinta);color:var(--papel);font-family:inherit;font-size:13px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;cursor:pointer;display:inline-block}
+.btn:hover{background:#3B3934}
+.btn[disabled]{opacity:.6;cursor:default}
+.nota{margin:16px 0 0;font-size:13px;line-height:1.6;color:var(--suave)}
+
+#fim[hidden],#form[hidden],.link[hidden]{display:none}
+#fim .texto{color:var(--tinta)}
+.link{display:inline-block;margin-top:26px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta);text-decoration:none;border-bottom:1px solid var(--tinta);padding-bottom:4px}
+
+:focus-visible{outline:2px solid var(--tinta);outline-offset:4px}
+@media (min-width:640px){
+  .marca{top:26px;left:34px;height:22px}
+  main{padding:104px 40px 80px}
+}
+@media (min-width:1000px){ main{padding:112px 8vw} }
+</style>
+</head>
+<body>
+
+<div class="marca"><img src="../assets/monogram-black.png" alt="Event Business School"></div>
+
+<main>
+  <div class="bloco">
+    <p class="kicker">Aula gratuita</p>
+    <h1>A aula: como dou orçamentos de eventos <em>sem perder o cliente</em></h1>
+
+    <form id="form" novalidate>
+      <p class="texto">Deixa aqui os teus dados e a aula abre logo a seguir.</p>
+
+      <div class="campo">
+        <label for="f-nome">Nome</label>
+        <input id="f-nome" name="nome" type="text" placeholder="O teu nome" autocomplete="name" autocapitalize="words">
+        <p class="erro" id="e-nome" hidden>Escreve o teu nome.</p>
+      </div>
+
+      <div class="campo">
+        <label for="f-email">Email</label>
+        <input id="f-email" name="email" type="email" placeholder="nome@email.com" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false">
+        <p class="erro" id="e-email" hidden>Escreve um email válido.</p>
+      </div>
+
+      <div class="campo">
+        <label for="f-telefone">Telemóvel</label>
+        <div class="tel">
+          <input class="ind" id="f-indicativo" name="indicativo" type="tel" value="+351" autocomplete="tel-country-code" inputmode="tel" aria-label="Indicativo">
+          <input id="f-telefone" name="telefone" type="tel" placeholder="912 345 678" autocomplete="tel-national" inputmode="tel">
+        </div>
+        <p class="erro" id="e-telefone" hidden>Escreve um número válido.</p>
+      </div>
+
+      <label class="autoriza"><input type="checkbox" id="f-autoriza" data-versao="aula-v1-2026-09"><span>Aceito receber emails da Adriana CheiraFesta e li a <a href="https://candidatura.eventbusinessschool.pt/privacidade.html" target="_blank" rel="noopener">política de privacidade</a>.</span></label>
+      <p class="erro" id="e-autoriza" hidden>Para veres a aula, marca a caixa.</p>
+
+      <div class="acoes"><button type="submit" class="btn" id="btn">Ver a aula</button></div>
+    </form>
+
+    <div id="fim" hidden>
+      <p class="texto" id="fim-texto"></p>
+      <a class="link" id="fim-link" href="#" hidden>Abrir a aula no YouTube</a>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  // ID do vídeo no YouTube (o que vem depois de watch?v=). Vazio enquanto a aula não sair.
+  var VIDEO_ID = "";
+  var ENDPOINT = "https://ebs-webhooks.vercel.app/api/aula";
+  var AULA = "orcamentos";
+  // ?teste=1 simula o envio: não grava nada, mostra na consola o que seria enviado.
+  var q = new URLSearchParams(location.search);
+  var TESTE = q.get("teste") === "1";
+  if (TESTE && q.get("video")) VIDEO_ID = q.get("video");
+
+  var $ = function(id){ return document.getElementById(id); };
+  function mostra(id, sim){ $(id).hidden = !sim; }
+
+  function webUrl(){ return "https://www.youtube.com/watch?v=" + VIDEO_ID; }
+
+  // Tenta abrir a app do YouTube; se a página continuar à vista, segue para o site.
+  function abrirVideo(){
+    var ua = navigator.userAgent || "";
+    var web = webUrl();
+    var app = null;
+    if (/iPhone|iPad|iPod/i.test(ua)) app = "youtube://www.youtube.com/watch?v=" + VIDEO_ID;
+    else if (/Android/i.test(ua)) app = "intent://www.youtube.com/watch?v=" + VIDEO_ID +
+      "#Intent;package=com.google.android.youtube;scheme=https;S.browser_fallback_url=" + encodeURIComponent(web) + ";end";
+    if (TESTE) { console.log("[teste] abriria", app || web, "e depois", web); window.__abriria = app || web; return; }
+    if (!app) { location.href = web; return; }
+    var saiu = false;
+    var marca = function(){ if (document.hidden) saiu = true; };
+    document.addEventListener("visibilitychange", marca);
+    window.addEventListener("pagehide", function(){ saiu = true; });
+    location.href = app;
+    setTimeout(function(){ if (!saiu && !document.hidden) location.href = web; }, 1600);
+  }
+
+  function valida(){
+    var ok = true;
+    var nome = $("f-nome").value.trim();
+    var email = $("f-email").value.trim();
+    var ind = $("f-indicativo").value.replace(/[^0-9]/g, "");
+    var num = $("f-telefone").value.replace(/[^0-9]/g, "");
+    mostra("e-nome", !nome); if (!nome) ok = false;
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    mostra("e-email", !emailOk); if (!emailOk) ok = false;
+    var telOk = ind.length >= 1 && (ind === "351" ? num.length === 9 : num.length >= 6);
+    mostra("e-telefone", !telOk); if (!telOk) ok = false;
+    var cx = $("f-autoriza").checked;
+    mostra("e-autoriza", !cx); if (!cx) ok = false;
+    return ok ? { nome: nome, email: email, telefone: "+" + ind + num } : null;
+  }
+
+  $("form").addEventListener("submit", function(e){
+    e.preventDefault();
+    var d = valida();
+    if (!d) return;
+    var btn = $("btn");
+    btn.disabled = true; btn.textContent = "A abrir…";
+
+    var corpo = {
+      aula: AULA, nome: d.nome, email: d.email, telefone: d.telefone,
+      consentimento: true,
+      consentimento_versao: $("f-autoriza").dataset.versao,
+      utm_source: q.get("utm_source") || "instagram",
+      utm_campaign: q.get("utm_campaign") || "reel-processo",
+      utm_content: q.get("utm_content") || "aula-orcamentos"
+    };
+
+    var envio;
+    if (TESTE) {
+      console.log("[teste] POST " + ENDPOINT, corpo);
+      window.__ultimoEnvio = corpo;
+      envio = Promise.resolve();
+    } else {
+      envio = fetch(ENDPOINT, {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(corpo), keepalive: true, mode: "cors"
+      }).catch(function(){});
+    }
+    // Nunca prender a pessoa à espera da lista: no máximo 2,5 s e segue.
+    var espera = new Promise(function(r){ setTimeout(r, 2500); });
+
+    Promise.race([envio, espera]).then(function(){
+      $("form").hidden = true;
+      $("fim").hidden = false;
+      if (VIDEO_ID) {
+        $("fim-texto").textContent = "Está a abrir no YouTube. Se não abrir sozinha, carrega aqui em baixo.";
+        var l = $("fim-link"); l.href = webUrl(); l.hidden = false;
+        abrirVideo();
+      } else {
+        $("fim-texto").textContent = "A aula está quase a sair. Recebes o link por email assim que estiver no ar.";
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
